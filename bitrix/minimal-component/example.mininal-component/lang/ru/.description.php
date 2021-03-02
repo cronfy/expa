@@ -1,0 +1,4 @@
+<?php
+$MESS ['C.EXAMPLE_MINIMAL_COMPONENT.DESCRIPTION.NAME'] = "Название компонента";
+$MESS ['C.EXAMPLE_MINIMAL_COMPONENT.DESCRIPTION.DESCRIPTION'] = "Описание компонента";
+?>
