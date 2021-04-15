@@ -47,3 +47,13 @@
  * Ctrl-Alt-Shift-Insert - создаёт новый Scratch-файл. Удобно создать, вставить код из буфера (например, xml), отформатировать, 
    поизучать. Или набросать временные заметки, или SQL-запрос, или PHP/JS-код и т. д. Причем если даже эти файлы закрыть в редакторе, 
    PHPStorm их помнит (Project View -> Scratches and Consoles).
+   
+## Печали
+
+К сожалению...
+
+ * ... не всегда корректно работает подсветка неиспользуемых свойств/методов - бывают и false positive и false negative
+   * https://intellij-support.jetbrains.com/hc/en-us/requests/3242018
+   * https://youtrack.jetbrains.com/issue/WI-42733
+   * https://youtrack.jetbrains.com/issue/WI-48012#focus=Comments-27-3642430.0-0
+   
