@@ -44,3 +44,8 @@ Staging area же реально мешает:
 
 https://youtrack.jetbrains.com/issue/IDEA-158396#focus=Comments-27-4670652.0-0 - совет про Frame switcher
 
+## Автовыравнивание кода
+
+* Code | Reformat file... - выключить Optimize Imports, иначе при автовыравнивании ФРАГМЕНТА кода все равно оптимизируются импорты, даже если они не попадали в выделенный блок.
+    * https://intellij-support.jetbrains.com/hc/en-us/requests/3268089
+    * https://youtrack.jetbrains.com/issue/IDEA-260762
