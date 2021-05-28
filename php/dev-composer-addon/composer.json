@@ -1,0 +1,15 @@
+{
+    "name": "dev/composer-addon",
+    "description": "composer addon",
+    "type": "project",
+    "require": {
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "cronfy",
+            "email": "cronfy@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}
