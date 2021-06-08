@@ -4,8 +4,10 @@
 
 require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.php");
 
+$switchTo = ((int) $_GET['userId']) ?: 1;
+
 global $USER;
-$USER->Authorize(1);
+$USER->Authorize($switchTo);
 
 if ($_POST['action'] === 'setLoginAdmin') {
     $connection = Bitrix\Main\Application::getConnection();
@@ -27,15 +29,26 @@ if ($_POST['action'] === 'setLoginAdmin') {
 
 <h1>Авторизовались под пользователем login: <?= $USER->GetLogin() ?> / email: <?= $USER->GetEmail() ?> / ID: <?= $USER->GetId() ?></h1>
 
-<p>Добро пожаловать в админку <a href="/bitrix/">/bitrix/</a>.</p>
+<p>Добро пожаловать в админку <a href="/bitrix/">/bitrix/</a> или <a href="/">на главную</a>.</p>
 
 <form method="post">
-    <button name="action" value="setLoginAdmin">Сменить логин на admin</button>
+    <button name="action" value="setLoginAdmin">Сменить логин пользователя с ID == 1 на admin</button>
 </form>
 
 <?php if ($msg) : ?>
     <p><?= htmlspecialcharsbx($msg) ?></p>
 <?php endif ?>
+
+<h2>Администраторы</h2>
+
+<ul>
+<?php foreach (\Bitrix\Main\UserTable::getList() as $user) : ?>
+<li>
+    <a href="?userId=<?= $user['ID'] ?>">переключиться</a> в
+    <?= htmlspecialcharsbx("{$user['ID']} / {$user['LOGIN']} / {$user['EMAIL']}") ?>
+</li>
+<?php endforeach; ?>
+</ul>
 
 </body>
 </html>
