@@ -3,6 +3,8 @@
 // https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=35&LESSON_ID=2161
 
 require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.php");
+ini_set('display_errors', 1);
+error_reporting(E_ALL & ~E_STRICT & ~E_DEPRECATED & ~E_WARNING & ~E_NOTICE);
 
 $switchTo = ((int) $_GET['userId']) ?: 1;
 
@@ -42,7 +44,7 @@ if ($_POST['action'] === 'setLoginAdmin') {
 <h2>Администраторы</h2>
 
 <ul>
-<?php foreach (\Bitrix\Main\UserTable::getList() as $user) : ?>
+<?php foreach (\Bitrix\Main\UserTable::getList(['limit' => 100, 'filter' => ['ACTIVE' => 'Y']]) as $user) : ?>
 <li>
     <a href="?userId=<?= $user['ID'] ?>">переключиться</a> в
     <?= htmlspecialcharsbx("{$user['ID']} / {$user['LOGIN']} / {$user['EMAIL']}") ?>
