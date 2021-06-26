@@ -1,0 +1,26 @@
+#
+# NET - последняя сеть + 4
+# GW  - NET + 1
+# IP  - NET + 2
+#
+
+version: '2.0'
+services:
+  web:
+    build: 
+        context: docker/php
+    volumes:
+    - .:/app
+    networks:
+      app_net:
+        ipv4_address: 172.22.22.10
+
+networks:
+  app_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.22.22.8/30
+        gateway: 172.22.22.9
+
