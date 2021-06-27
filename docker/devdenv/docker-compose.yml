@@ -1,0 +1,46 @@
+version: '2.0'
+
+services:
+
+  php-apache:
+    build: 
+        context: ${BUILD_SCRIPTS_LOCAL_PATH}/php-apache/build/${PHP_VERSION}
+    volumes:
+    - ./php-app:/app
+    - ./${BUILD_SCRIPTS_LOCAL_PATH}:${BUILD_SCRIPTS_MOUNT_POINT}
+    networks:
+      app_net:
+        ipv4_address: 172.22.22.130
+
+  mysql:
+    build: 
+        context: ${BUILD_SCRIPTS_LOCAL_PATH}/mysql/build
+    command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
+    env_file:
+        - .env
+    volumes:
+    - ./${BUILD_SCRIPTS_LOCAL_PATH}:${BUILD_SCRIPTS_MOUNT_POINT}
+    networks:
+      app_net:
+        ipv4_address: 172.22.22.131
+    ports:
+        - 3306:3306
+
+  memcached:
+    build:
+        context: ${BUILD_SCRIPTS_LOCAL_PATH}/memcached/build
+    volumes:
+    - ./${BUILD_SCRIPTS_LOCAL_PATH}:${BUILD_SCRIPTS_MOUNT_POINT}
+    networks:
+      app_net:
+        ipv4_address: 172.22.22.132
+          
+networks:
+  app_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.22.22.128/29
+        gateway: 172.22.22.129
+
