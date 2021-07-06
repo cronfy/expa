@@ -5,6 +5,11 @@ SERVICE_PATH=""
 
 set -eu -o pipefail
 
+if [ "${1-}" = "-vvv" ] ; then
+  shift
+  set -x
+fi
+
 success=no
 
 processAutoErrorMessage() {
@@ -95,11 +100,26 @@ getServiceBuildDir() {
 }
 
 runServiceBuildScript() {
-  local script="$1" serviceName=$(getAutoServiceName)
+  local script="$1" serviceName="$(getAutoServiceName)" currentDirectory="$PWD"
   shift
 
+  cdToProjectDirectory
+
   docker-compose exec "$serviceName" "$BUILD_SCRIPTS_MOUNT_POINT/$serviceName/build/indocker/$script" "$@"
+
+  cd "$currentDirectory"
 }
+
+restartService() {
+    local serviceName="$(getAutoServiceName)" currentDirectory="$PWD"
+
+    cdToProjectDirectory
+
+    docker-compose restart "$serviceName"
+
+    cd "$currentDirectory"
+}
+
 
 loadEnv
 
