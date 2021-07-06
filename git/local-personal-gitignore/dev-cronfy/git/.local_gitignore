@@ -1,0 +1,11 @@
+/.wsync
+/.idea
+dev-*
+/dev-cronfy
+/*.sql.gz
+.D
+
+# project specific
+
+# ...
+

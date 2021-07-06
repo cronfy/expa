@@ -10,6 +10,8 @@
 [core]
 #        ...
     excludesfile = dev-cronfy/git/.local_gitignore
+#        можно даже вне репозитория, например:
+#    excludesfile = ../dev-cronfy/git/.local_gitignore
 ```
 
 В `dev-cronfy/git/.local_gitignore`:
