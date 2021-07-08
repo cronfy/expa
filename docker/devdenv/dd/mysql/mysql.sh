@@ -10,8 +10,10 @@ serviceName="$(getAutoServiceName)"
 cdToProjectDirectory "$ROOT_PATH_RELATIVE_TO_SCRIPT"
 
 if test -t 0 ; then
-	docker-compose exec "$serviceName" mysql -u root project
+	# shell
+	docker-compose exec "$serviceName" mysql -u root project --default-character-set=utf8
 else
+	# pipe
 	docker-compose exec -T "$serviceName" mysql -u root project
 fi
 

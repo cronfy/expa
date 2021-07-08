@@ -11,6 +11,7 @@ echo "Setting UID $DOCKER_USER_ID for user www-data"
 usermod -u "$DOCKER_USER_ID" www-data
 usermod -d /var/www www-data
 chown -R www-data:www-data /var/www
+chown www-data:www-data /app
 
 setSuccess
 
