@@ -100,7 +100,14 @@ getServiceBuildDir() {
 }
 
 runServiceBuildScript() {
-  local script="$1" serviceName="$(getAutoServiceName)" currentDirectory="$PWD"
+  if [ "${1-}" = "--service" ] ; then
+	  serviceName="$2"
+	  shift 2
+  else
+	  serviceName="$(getAutoServiceName)"
+  fi
+
+  local script="$1" currentDirectory="$PWD"
   shift
 
   cdToProjectDirectory
