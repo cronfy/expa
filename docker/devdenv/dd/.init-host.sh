@@ -128,7 +128,7 @@ restartService() {
 }
 
 
-loadEnv
+#loadEnv
 
 requireExplicitSuccess true
 
