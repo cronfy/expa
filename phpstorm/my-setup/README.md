@@ -27,3 +27,10 @@ Settings | Keymap -> Main menu -> Navigate -> Back, Forward.
 Другие привязанные к этому сочетанию дейтсвия шторм переспросит и отцепит сам.
 
 Перемещается к месту предыдущего редактирования.
+
+## inotify
+
+```
+echo fs.inotify.max_user_watches = 5242881 > /etc/sysctl.d/99-phpstorm.conf
+```
+
