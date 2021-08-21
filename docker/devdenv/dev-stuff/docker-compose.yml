@@ -1,0 +1,23 @@
+version: '2.0'
+
+services:
+
+  php-apache:
+    user: ${RUN_AS_UID}:${RUN_AS_GID}
+    build: 
+        context: ./docker-compose/php-apache
+    volumes:
+    - ../src:/app
+    networks:
+      app_net:
+        ipv4_address: 172.10.1.2
+
+networks:
+  app_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.10.1.0/24
+        gateway: 172.10.1.1
+
