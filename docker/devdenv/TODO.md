@@ -7,6 +7,10 @@
    * `echo '!includedir /etc/my.cnf.d'  >> /etc/my.cnf`
 
 
+## bootstrap
+
+1. Вынести в любую папку.
+
 ## php-apache 
 
  1. Запуск не от root
