@@ -26,10 +26,12 @@ RUN a2enmod rewrite expires headers
 # GENERIC DEV SETTINGS: Общие настройки dev-окружения
 #
 
+ARG documentRoot
+
 WORKDIR /root/docker-scripts
 COPY docker-scripts .
 # docroot: Установить /app/web в качестве document root
-RUN ./set-document-root.sh /app/web
+RUN ./set-document-root.sh ${documentRoot}
 # workdir: Установить /app в качестве папки, в которой будут выпоняться команды по умолчанию
 WORKDIR /app
 

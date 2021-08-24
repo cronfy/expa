@@ -5,7 +5,9 @@ services:
   php-apache:
     user: ${RUN_AS_UID}:${RUN_AS_GID}
     build: 
-        context: ./dev-stuff/docker-compose/php-apache
+        context: ${DOCKER_COMPOSE_CONF_PATH}/php-apache
+        args:
+          documentRoot: ${PHP_APACHE__DOCUMENT_ROOT}
     volumes:
     - ./src:/app
     networks:
