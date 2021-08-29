@@ -10,7 +10,7 @@ if [ -z "$DOCKER_COMPOSE_CONF_DIR" ] && [ "$PROJECT_PATH" = "." ] ; then
 fi
 
 if [ -z "$PROJECT_PATH" ] || [ -z "$DOCKER_COMPOSE_CONF_DIR" ]  ; then
-	echo "Syntax:  $(basename "$0") <project_directory> <docker_compose_conf_directory>" >&2
+	echo "Syntax:  $(basename "$0") <project_directory> [docker_compose_conf_directory]" >&2
 	exit 1
 fi
 

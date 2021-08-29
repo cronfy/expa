@@ -2,22 +2,16 @@
 
 ## Быстрый старт (разворачивание первого проекта)
 
-1. Создать папку проекта. Положить туда `dev-stuff/docker-compose/`
-2. Запустить в папке проекта `./dev-stuff/docker-compose/bootstrap.sh .` Он создаст src/ и симлинки.
-3. В `src/` развернуть код проекта.
-3. В .env указать:
-    * В `RUN_AS_UID` и `RUN_AS_GID` - свои `UID` и `GID` пользователя (посмотреть командой `id`)
-    * В `PHP_APACHE__DOCUMENT_ROOT` - document root (внутри контейнера). На хосте `src/` мапится в `/app` в контейнере. Соответственно, если document root это `src/web`, то в `PHP_APACHE__DOCUMENT_ROOT` нужно указать `/app/web`. Если `src/www`, то `/app/www`. Если просто `src/`, то просто `/app`, соответственно.
-    * (если это не первый проект, потребуется также указать IP - см. "Разворачивание последующих проектов")
-5. По необходимости в Dockerfile дописать специфичные для проекта команды. TODO include+ https://github.com/edrevo/dockerfile-plus
-6. docker-compose up -d
-
-## Разворачивание последующих проектов
-
-Все происходит аналогично первому разворачиванию, но дополнительно требуется выделить другую сеть в `.env` в параметре `BASE_NET`, который указывает первые три октета для выделения IP сервисам в проекте. 
-
-Например, если для первого проекта `BASE_NET` была указана как `172.10.1`, то для второго это может быть `172.10.2`, для третьего `172.10.3` и т. д. 
+1. `dev-stuff/docker-compose/`
+1. copy some of `services/`
+1. `./dev-stuff/docker-compose/bootstrap.sh .` 
+1. В `src/` развернуть код проекта.
+1. tune `.env` - network, document root
+5. ??? По необходимости в Dockerfile дописать специфичные для проекта команды. TODO include+ https://github.com/edrevo/dockerfile-plus
+6. `docker-compose up -d`
+7. Поправилил что-то в Dockerfile - `docker-compose up -d --build`
 
 ## См. также
 
  * https://github.com/frontid/dockerizer
+
