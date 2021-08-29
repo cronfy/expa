@@ -9,7 +9,7 @@ services:
         args:
           documentRoot: ${PHP_APACHE__DOCUMENT_ROOT}
     volumes:
-    - ./src:/app
+    - ${PHP_APACHE__BIND_DIRECTORY}:/app
     networks:
       app_net:
         ipv4_address: ${BASE_NET}.2
