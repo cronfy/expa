@@ -22,7 +22,8 @@ echo "Creating symlinks"
 
 ln -nfs "$DOCKER_COMPOSE_CONF_PATH/.env" .env
 ln -nfs "$DOCKER_COMPOSE_CONF_PATH/docker-compose.yml" docker-compose.yml
-ln -nfs "$DOCKER_COMPOSE_CONF_PATH/php-apache.sh" php-apache
+ln -nfs "$DOCKER_COMPOSE_CONF_PATH/php-apache/php-apache.sh" php-apache
+ln -nfs "$DOCKER_COMPOSE_CONF_PATH/mysql/mysql.sh" mysql
 
 echo "Creating project source directory src/"
 
