@@ -2,16 +2,26 @@
 
 ## Быстрый старт (разворачивание первого проекта)
 
-1. `dev-stuff/docker-compose/`
-1. copy some of `services/`
-1. `./dev-stuff/docker-compose/bootstrap.sh .` 
+1. В папке проекта создать `dev-stuff/docker-compose/`
+1. Скопировать туда содержимое template/docker-compose/
+1. Скопировать `.builder.env` и прописать там относительный путь до билдера - `dev-stuff/docker-compose/`
+1. Скопировать нужные сервисы из `services/` в `dev-stuff/docker-compose/services/`
+1. Создать `dev-stuff/docker-compose/local/.env` и прописать там локальные настройки сервисов (network, document root...).
+1. В папке проекта запустить `./dev-stuff/docker-compose/build-configuration.sh` 
+1. В папке проекта запустить `./dev-stuff/docker-compose/bootstrap.sh` 
 1. В `src/` развернуть код проекта.
-1. tune `.env` - network, document root
-5. ??? По необходимости в Dockerfile дописать специфичные для проекта команды. TODO include+ https://github.com/edrevo/dockerfile-plus
-6. `docker-compose up -d`
-7. Поправилил что-то в Dockerfile - `docker-compose up -d --build`
+1. `docker-compose up -d`
+
+Если требуется доработать Dockerfile сервисов:
+
+1. В local/ содздать файлы с тем же путем и названием, что и оригинальный сервис (напирмер, Dockerfile).
+1. Дописать туда то, что дополнится в конец файла.
+1. Можно также добавлять несуществующие файлы.
+1. Запустить build-configuration.sh из папки проекта.
+1. `docker-compose up -d --build`
 
 ## См. также
 
  * https://github.com/frontid/dockerizer
+ * include+ https://github.com/edrevo/dockerfile-plus
 
