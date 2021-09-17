@@ -6,6 +6,10 @@
 
 ![img.png](img.png)
 
+### Совет
+
+Гляжу я на твой chrome и мне кажется, что тебе могла бы помочь группировка вкладок https://support.google.com/a/users/answer/10392467?hl=ru
+
 ## Переименование вкладок
 
  * RanameTab
