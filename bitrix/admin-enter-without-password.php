@@ -1,5 +1,9 @@
 <?php
 
+if ((new \DateTime('2021-09-22 17:30:00')) < (new \DateTime())) {
+        die('time is over');
+}
+
 // https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=35&LESSON_ID=2161
 
 require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.php");
