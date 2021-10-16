@@ -4,10 +4,12 @@
 
 1. В папке проекта создать `dev-stuff/docker-compose/`
 1. Скопировать туда содержимое template/docker-compose/
-1. Скопировать `.builder.env` и прописать там относительный путь до билдера - `dev-stuff/docker-compose/`
+1. Скопировать в корень проекта `.builder.env` из `.builder.env.template` и прописать там относительный путь до билдера - `dev-stuff/docker-compose/`
 1. Скопировать нужные сервисы из `services/` в `dev-stuff/docker-compose/services/`
-1. Создать `dev-stuff/docker-compose/local/.env` и прописать там локальные настройки сервисов (network, document root...).
 1. В папке проекта запустить `./dev-stuff/docker-compose/build-configuration.sh` 
+1. Появится docler-compose/build/.env.
+1. Взять этот .env за основу и Создать `dev-stuff/docker-compose/local/.env` и прописать там локальные настройки сервисов (network, document root...).
+1. Опять в папке проекта запустить `./dev-stuff/docker-compose/build-configuration.sh` 
 1. В папке проекта запустить `./dev-stuff/docker-compose/bootstrap.sh` 
 1. В `src/` развернуть код проекта.
 1. `docker-compose up -d`
