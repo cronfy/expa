@@ -120,7 +120,7 @@ git commit -m 'initial'
 
 # 60. Установить nginx
 
-(на основе [этой инструкции](https://stackoverflow.com/c/itweb/questions/237/238))
+(на основе [этой инструкции](#))
 
 Включаем nginx, чтобы он всегда сразу был, чтобы его потом не устанавливать при рабочих сайтах.
 
@@ -152,8 +152,8 @@ git commit -m 'initial'
 
 Сначала нужно определиться с версией PHP. Это очень важно, потому что на новом PHP не работает старый Битрикс (точно не помню, почему, вроде в php что-то запретили), а на старом PHP не работает новый Битрикс (тоже не помню, почему, возможно это был баг, потому что если на 7.1 обновить Битрикс 18 до версии 20, то все работает нормально).
 
- * Если версия Битрикса 20 и выше, ставим 7.4 по [этой инструкции](https://stackoverflow.com/c/itweb/a/329)
- * Если 19 и меньше - ставим 7.1 по [этой инструкции](https://stackoverflow.com/c/itweb/a/330)
+ * Если версия Битрикса 20 и выше, ставим 7.4 по [этой инструкции](#)
+ * Если 19 и меньше - ставим 7.1 по [этой инструкции](#)
 
 # 80. Перезапускаем Apache
 
@@ -165,7 +165,7 @@ service apache2 reload
 
 # 90. Оптимизация mysql под Битрикс
 
-Делаем по [инструкции по настройке Mysql для Битрикс](https://stackoverflow.com/c/itweb/questions/255/256).
+Делаем по [инструкции по настройке Mysql для Битрикс](#).
 
 Для размещения используем файлы
 
@@ -188,24 +188,24 @@ service mysql restart
 ```
 cd /etc
 git add .
-git commit -m 'первоначальная настройка по инструкции: https://stackoverflow.com/c/itweb/questions/80#81'
+git commit -m 'первоначальная настройка по инструкции'
 ```
 2. Коммитим `/usr/local/mgr5/etc`
 ```
 cd /usr/local/mgr5/etc
 git add .
-git commit -m 'первоначальная настройка по инструкции: https://stackoverflow.com/c/itweb/questions/80#81'
+git commit -m 'первоначальная настройка по инструкции'
 ```
 3. Коммитим `/opt/php74/etc`
 ```
-if [ -d /opt/php74/etc ] ; then cd /opt/php74/etc && git add . && git diff-index --quiet HEAD || git commit -m 'первоначальная настройка по инструкции: https://stackoverflow.com/c/itweb/questions/80#81' || echo -e "\n\n ** FAIL\n\n" >&2 ; else echo -e "\n -- PHP 7.4 is not installed\n" ; fi
+if [ -d /opt/php74/etc ] ; then cd /opt/php74/etc && git add . && git diff-index --quiet HEAD || git commit -m 'первоначальная настройка по инструкции' || echo -e "\n\n ** FAIL\n\n" >&2 ; else echo -e "\n -- PHP 7.4 is not installed\n" ; fi
 ```
 
 Если написал FAIL, значит все плохо, если написал "not installed", значит просто эта версия PHP не установлена.
 
 4. Коммитим `/opt/php71/etc`
 ```
-if [ -d /opt/php71/etc ] ; then cd /opt/php71/etc && git add . && git diff-index --quiet HEAD || git commit -m 'первоначальная настройка по инструкции: https://stackoverflow.com/c/itweb/questions/80#81' || echo -e "\n\n ** FAIL\n\n" >&2 ; else echo -e "\n -- PHP 7.1 is not installed\n" ; fi
+if [ -d /opt/php71/etc ] ; then cd /opt/php71/etc && git add . && git diff-index --quiet HEAD || git commit -m 'первоначальная настройка по инструкции' || echo -e "\n\n ** FAIL\n\n" >&2 ; else echo -e "\n -- PHP 7.1 is not installed\n" ; fi
 ```
 
 Если написал FAIL, значит все плохо, если написал "not installed", значит просто эта версия PHP не установлена.
