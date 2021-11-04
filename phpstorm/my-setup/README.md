@@ -34,7 +34,7 @@ Settings | Keymap -> Main menu -> Navigate -> Back, Forward.
 echo fs.inotify.max_user_watches = 5242881 > /etc/sysctl.d/99-phpstorm.conf
 ```
 
-## Открытие Diff в отдельном окне, а не во вкладке Editor
+## Открытие Diff в отдельном окне, а не во вкладке Editor +
 
 Preferences -> Advanced settings: (группа Version control) Отключить "Open Diff as Editor Tab"
 
