@@ -26,12 +26,14 @@ RUN a2enmod rewrite expires headers
 # GENERIC DEV SETTINGS: Общие настройки dev-окружения
 #
 
-ARG documentRoot
+ARG documentRoot runAsUid
 
 WORKDIR /root/docker-scripts
 COPY docker-scripts .
 # docroot: Установить /app/web в качестве document root
 RUN ./set-document-root.sh ${documentRoot}
+# user home: Создать пользователя и домашнюю директорию для него (для корректной работы composer)
+RUN ./make-user-home.sh ${runAsUid}
 # workdir: Установить /app в качестве папки, в которой будут выпоняться команды по умолчанию
 WORKDIR /app
 
@@ -39,7 +41,9 @@ WORKDIR /app
 # PROJECT: Команды, специфичные для проекта
 #
 
-FROM base as php-73-myproject
+FROM base as project
 
 # RUN install-php-extensions bcmath
-# ...
+# ... etc
+
+

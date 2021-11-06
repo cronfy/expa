@@ -1,0 +1,10 @@
+# use this file for tuning mysql
+
+[mysqld]
+
+# ...
+
+[mysql]
+
+# ...
+
