@@ -34,16 +34,5 @@ COPY docker-scripts .
 RUN ./set-document-root.sh ${documentRoot}
 # user home: Создать пользователя и домашнюю директорию для него (для корректной работы composer)
 RUN ./make-user-home.sh ${runAsUid}
-# workdir: Установить /app в качестве папки, в которой будут выпоняться команды по умолчанию
+# workdir: Установить /app в качестве папки, в которой будут выполняться команды по умолчанию
 WORKDIR /app
-
-#
-# PROJECT: Команды, специфичные для проекта
-#
-
-FROM base as project
-
-# RUN install-php-extensions bcmath
-# ... etc
-
-

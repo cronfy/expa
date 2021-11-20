@@ -1,0 +1,8 @@
+#
+# PROJECT: Команды, специфичные для проекта
+#
+
+FROM base as project
+
+# RUN install-php-extensions bcmath
+# ... etc

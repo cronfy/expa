@@ -5,23 +5,10 @@ set -eu -o pipefail
 SERVICES_DIR="${1:-.}"
 CONF_DEST_DIR="${2:-.}"
 
+HAVE_VOLUMES=no
+
 function getServiceDirs() {
-    find "$SERVICES_DIR" -maxdepth 1 -mindepth 1 -type d
-}
-
-function echoDotEnvHeader() {
-  local userUid=`id -u` userGid=`id -g`
-
-  echo "
-SERVICES_PATH=\"$SERVICES_DIR\"
-
-RUN_AS_UID=\"$userUid\"
-RUN_AS_GID=\"$userGid\"
-
-# первые *три* октета для выделения IP сервисам в проекте
-BASE_NET=172.10.1
-BASE_NET_MASK=24
-"
+    find "$SERVICES_DIR" -maxdepth 1 -mindepth 1 -type d | sort
 }
 
 function echoComposeHeader() {
@@ -40,7 +27,6 @@ networks:
 }
 
 function buildDotEnvFileTemplate() {
-  echoDotEnvHeader
   echoServicesDotenvBlocks
 }
 
@@ -48,6 +34,12 @@ function buildComposeFileTemplate() {
   echoComposeHeader
   echo "services:"
   echoServicesComposeBlocks
+}
+
+function echoDotEnvServiceHeader() {
+  local serviceName="$1"
+
+  echo -e "#\n# SERVICE: $serviceName\n#\n"
 }
 
 function echoServicesDotenvBlocks() {
@@ -59,19 +51,28 @@ function echoServicesDotenvBlocks() {
     serviceName="$(basename "$serviceDir")"
     serviceEnvTemplateFile="$serviceDir/.env"
 
-    if [ ! -f "$serviceEnvTemplateFile" ] ; then
-      continue
-    fi
+   if [ -x "$serviceDir/.env.gen.sh" ] ; then
+	echoDotEnvServiceHeader "$serviceName"
 
-    echo -e "#\n# SERVICE: $serviceName\n#\n"
-    cat "$serviceEnvTemplateFile" | sed "s/{{service_ip}}/$serviceIp/"
+	local overrideFile="$SERVICES_DIR/.env.$serviceName.override"
+	[ ! -f "$overrideFile" ] && overrideFile=""
+
+	"$serviceDir/.env.gen.sh" "$SERVICES_DIR" "$overrideFile"
+   elif [ -f "$serviceEnvTemplateFile" ] ; then
+	echoDotEnvServiceHeader "$serviceName"
+        cat "$serviceEnvTemplateFile" | sed "s/{{service_ip}}/$serviceIp/"
+   fi
   done
 }
 
 function echoServicesComposeBlocks() {
+  local serviceTemplateFile serviceName serviceDir
+
   for serviceDir in $(getServiceDirs) ; do
     serviceName="$(basename "$serviceDir")"
     serviceTemplateFile="$serviceDir/docker-compose.yml"
+
+    [ -f "$serviceDir/docker-compose.yml.volumes" ] && HAVE_VOLUMES=yes
 
     if [ ! -f "$serviceTemplateFile" ] ; then
       continue
@@ -81,38 +82,26 @@ function echoServicesComposeBlocks() {
   done
 }
 
+function echoComposeVolumesBlock() {
+  [ "$HAVE_VOLUMES" != "yes" ] && return
+
+  local serviceVolumesFile serviceName serviceDir
+
+  echo -e "\nvolumes:"
+
+  for serviceDir in $(getServiceDirs) ; do
+    serviceName="$(basename "$serviceDir")"
+    serviceVolumesFile="$serviceDir/docker-compose.yml.volumes"
+
+    if [ ! -f "$serviceVolumesFile" ] ; then
+      continue
+    fi
+
+    cat "$serviceVolumesFile" | grep -Ev '^\s*(volumes:\s*)?$'
+  done
+}
+
+
 buildDotEnvFileTemplate > "$CONF_DEST_DIR/.env.template"
 buildComposeFileTemplate > "$CONF_DEST_DIR/docker-compose.yml.template"
-
-exit
-
-#
-# build docker-compose.yml
-#
-
-composeMainFile="$BUILDER_DIR_ABS/docker-compose.yml"
-composeDestDir="$buildDirAbs"
-
-echo -e "\n#\n# Building docker-compose.yml\n#\n"
-
-cd "$BUILDER_DIR_ABS"
-
-cp "$composeMainFile" "$composeDestDir/docker-compose.yml"
-
-builtServiceDirs="$(find "$buildDirAbs" -maxdepth 1 -mindepth 1 -type d)"
-
-for serviceDir in $builtServiceDirs ; do
-	serviceName="$(basename "$serviceDir")"
-	serviceComposeFile="$serviceDir/docker-compose.yml"
-
-  cp "$serviceComposeFile" "$composeDestDir/docker-compose.$serviceName.yml"
-done
-
-echo "Done building docker-compose.yml"
-
-#
-# End
-#
-
-echo -e "\nDone."
-
+echoComposeVolumesBlock >> "$CONF_DEST_DIR/docker-compose.yml.template"
