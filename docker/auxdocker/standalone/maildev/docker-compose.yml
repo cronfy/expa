@@ -1,0 +1,10 @@
+version: '2.0'
+
+services:
+
+  maildev:
+    image: maildev/maildev
+    ports:
+       - "172.10.5.0:80:80"
+       - "172.10.5.0:25:25"
+       
