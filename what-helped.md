@@ -19,7 +19,7 @@
 
  * Работа в сильной команде. Оценка: 10/10.
  * Видео-курс [Cleancoders.com](https://cleancoders.com/) (Bob Martin), эпизоды 1-45. Повлияло на подход к разработке, на стиль кодинга, на скиллы по проектированию архитектуры ПО. Оценка: 10/10.
- * [Visualising software architecture with the C4 model - Simon Brown, Agile on the Beach 2019](https://www.youtube.com/watch?v=x2-rSnhpw0g) - про модель C4. Оценка: 10/10.
+ * [Visualising software architecture with the C4 model - Simon Brown, Agile on the Beach 2019](https://www.youtube.com/watch?v=x2-rSnhpw0g) - про модель C4. Я посмотрел это видео и мои диаграммы стали существенно понятнее, а я открыл путь к постоянному их совершенствованию. Оценка: 10/10.
  * IDE PHPStorm. Потрясающий инструмент. Ни разу не пожалел заплаченных денег за лицензию. Аналогов (имхо) не существует. Оценка: для аналогичных инструментов, которые я знаю, оценка максимум 5/10, для PhpStorm - 10/10.
  * Канал [Перейти в АйТи](https://t.me/pereiti_v_aiti).
  * [Miro](https://miro.com/). (Пока не было Miro, проектировать получалось плохо, а с Miro стало хорошо).
