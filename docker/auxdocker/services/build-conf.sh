@@ -57,7 +57,7 @@ function echoServicesDotenvBlocks() {
 	local overrideFile="$SERVICES_DIR/.env.$serviceName.override"
 	[ ! -f "$overrideFile" ] && overrideFile=""
 
-	"$serviceDir/.env.gen.sh" "$SERVICES_DIR" "$overrideFile"
+	"$serviceDir/.env.gen.sh" "$SERVICES_DIR" "$overrideFile" | sed "s/{{service_ip}}/$serviceIp/"
    elif [ -f "$serviceEnvTemplateFile" ] ; then
 	echoDotEnvServiceHeader "$serviceName"
         cat "$serviceEnvTemplateFile" | sed "s/{{service_ip}}/$serviceIp/"
@@ -102,6 +102,10 @@ function echoComposeVolumesBlock() {
 }
 
 
-buildDotEnvFileTemplate > "$CONF_DEST_DIR/.env.template"
-buildComposeFileTemplate > "$CONF_DEST_DIR/docker-compose.yml.template"
-echoComposeVolumesBlock >> "$CONF_DEST_DIR/docker-compose.yml.template"
+buildDotEnvFileTemplate > "$CONF_DEST_DIR/.env"
+echo "Created: .env"
+
+buildComposeFileTemplate > "$CONF_DEST_DIR/docker-compose.yml"
+echoComposeVolumesBlock >> "$CONF_DEST_DIR/docker-compose.yml"
+echo "Created: docker-compose.yml"
+

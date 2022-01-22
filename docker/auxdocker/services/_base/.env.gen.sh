@@ -10,7 +10,7 @@ function getServiceDirs() {
 }
 
 function echoDotEnvHeader() {
-  echo "SERVICES_PATH=\"$SERVICES_DIR\"
+  echo "SERVICES_PATH=\"$SERVICES_PATH\"
 
 RUN_AS_UID=\"$userUid\"
 RUN_AS_GID=\"$userGid\"
