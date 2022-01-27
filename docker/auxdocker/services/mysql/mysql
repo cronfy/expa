@@ -15,7 +15,7 @@ case "$1" in
 	*)
 		if test -t 0 ; then
 			# shell
-			docker-compose exec "$SERVICE_NAME" mysql --default-character-set=utf8 "$@"
+			docker-compose exec -e LC_CTYPE=C.UTF-8 "$SERVICE_NAME" mysql --default-character-set=utf8 "$@"
 		else
 			# pipe
 			docker-compose exec -T "$SERVICE_NAME" mysql --default-character-set=utf8 "$@"
