@@ -3,21 +3,21 @@
 set -eu -o pipefail
 
 SERVICES_DIR="${1:-.}"
-OVERRIDES_FILE="${2:-}"
+OVERRIDES_FILE_NAME="${2:-}"
 
-PHP_APACHE__DOCUMENT_ROOT=/app/www
-PHP_APACHE__BIND_DIRECTORY=./src
-PHP_APACHE__PHP_VERSION=7.4
+. $SERVICES_DIR/_include/build.lib.sh
+
 PHP_APACHE__IP='${BASE_NET}.{{service_ip}}'
 
 
 
-[ -n "$OVERRIDES_FILE" ] && {
-	. "$OVERRIDES_FILE"
+[ -f "$OVERRIDES_FILE_NAME" ] && {
+	. "$OVERRIDES_FILE_NAME"
 }
 
 
 
+ensureVariablesConfigured "$OVERRIDES_FILE_NAME" PHP_APACHE__DOCUMENT_ROOT PHP_APACHE__BIND_DIRECTORY PHP_APACHE__PHP_VERSION
 
 
 echo "

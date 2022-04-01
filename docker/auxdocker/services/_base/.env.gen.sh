@@ -3,7 +3,9 @@
 set -eu -o pipefail
 
 SERVICES_DIR="${1:-.}"
-OVERRIDES_FILE="${2:-}"
+OVERRIDES_FILE_NAME="${2:-}"
+
+. $SERVICES_DIR/_include/build.lib.sh
 
 function getServiceDirs() {
     find "$SERVICES_DIR" -maxdepth 1 -mindepth 1 -type d
@@ -24,12 +26,11 @@ BASE_NET_MASK=$BASE_NET_MASK
 userUid=`id -u` 
 userGid=`id -g`
 
-BASE_NET=172.10.1
-BASE_NET_MASK=24
-
-[ -n "$OVERRIDES_FILE" ] && {
-	. "$OVERRIDES_FILE"
+[ -f "$OVERRIDES_FILE_NAME" ] && {
+	. "$OVERRIDES_FILE_NAME"
 }
+
+ensureVariablesConfigured "$OVERRIDES_FILE_NAME" SERVICES_PATH BASE_NET BASE_NET_MASK
 
 echoDotEnvHeader
 
