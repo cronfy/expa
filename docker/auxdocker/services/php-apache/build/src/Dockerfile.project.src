@@ -4,5 +4,18 @@
 
 FROM base as project
 
+#
+# Extensions
+#
+
 # RUN install-php-extensions bcmath
 # ... etc
+
+#
+# Addons
+#
+
+# COPY addons /root/addons
+# RUN /root/addons/msmtp/install.sh
+# ...
+
