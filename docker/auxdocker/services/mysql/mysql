@@ -2,6 +2,14 @@
 
 SERVICE_NAME=mysql
 
+function assertRunning() {
+	docker-compose ps --services --filter "status=running" | grep -q "^$SERVICE_NAME$" || {
+		echo "Service $SERVICE_NAME is not running." >&2
+		exit 1
+	}
+}
+
+
 case "$1" in
 	build|rebuild)
 		docker-compose up -d --build "$SERVICE_NAME"
@@ -10,9 +18,11 @@ case "$1" in
 		docker-compose restart "$SERVICE_NAME"
 		;;
 	root)
+	  assertRunning
 		docker-compose exec -u root "$SERVICE_NAME" bash
 		;;
 	*)
+	  assertRunning
 		if test -t 0 ; then
 			# shell
 			docker-compose exec -e LC_CTYPE=C.UTF-8 "$SERVICE_NAME" mysql --default-character-set=utf8 "$@"

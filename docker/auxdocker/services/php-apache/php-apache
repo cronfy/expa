@@ -2,6 +2,13 @@
 
 SERVICE_NAME=php-apache
 
+function assertRunning() { 
+	docker-compose ps --services --filter "status=running" | grep -q "^$SERVICE_NAME$" || {
+		echo "Service $SERVICE_NAME is not running." >&2
+		exit 1
+	}
+}
+
 case "$1" in
 	build|rebuild)
 		docker-compose up -d --build $SERVICE_NAME
@@ -10,13 +17,16 @@ case "$1" in
 		docker-compose restart $SERVICE_NAME
 		;;
 	root)
+		assertRunning
 		docker-compose exec -u root $SERVICE_NAME bash
 		;;
 	ext)
+		assertRunning
 		shift
 		docker-compose exec -u root $SERVICE_NAME install-php-extensions "$@"
 		;;
 	*)
+		assertRunning
 		if [ $# = "0" ] ; then
 			docker-compose exec $SERVICE_NAME bash
 		else
