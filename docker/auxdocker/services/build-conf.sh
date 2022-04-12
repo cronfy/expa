@@ -55,7 +55,6 @@ function echoServicesDotenvBlocks() {
 	echoDotEnvServiceHeader "$serviceName"
 
 	local overrideFile="$SERVICES_DIR/.env.$serviceName.override"
-	[ ! -f "$overrideFile" ] && overrideFile=""
 
 	"$serviceDir/.env.gen.sh" "$SERVICES_DIR" "$overrideFile" | sed "s/{{service_ip}}/$serviceIp/"
    elif [ -f "$serviceEnvTemplateFile" ] ; then
