@@ -7,8 +7,8 @@ apt-get update && apt install msmtp -y
 echo "
 account default
 from php-apache@container
-host maildev.dev.doc
-port 25
+host maildev
+port 1025
 logfile /var/log/msmtp.log
 " > /etc/msmtprc
 

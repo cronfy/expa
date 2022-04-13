@@ -1,0 +1,11 @@
+version: '2.0'
+
+services:
+
+  maildev:
+    build:
+      context: ${SERVICES_PATH}/maildev/build
+    networks:
+      app_net:
+        ipv4_address: ${MAILDEV__IP}
+
