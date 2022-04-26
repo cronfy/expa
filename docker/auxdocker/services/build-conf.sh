@@ -54,9 +54,9 @@ function echoServicesDotenvBlocks() {
    if [ -x "$serviceDir/.env.gen.sh" ] ; then
 	echoDotEnvServiceHeader "$serviceName"
 
-	local overrideFile="$SERVICES_DIR/.env.$serviceName.override"
+	local overrideFileName="$SERVICES_DIR/.env.$serviceName.override"
 
-	"$serviceDir/.env.gen.sh" "$SERVICES_DIR" "$overrideFile" | sed "s/{{service_ip}}/$serviceIp/"
+	"$serviceDir/.env.gen.sh" "$SERVICES_DIR" "$overrideFileName" | sed "s/{{service_ip}}/$serviceIp/"
    elif [ -f "$serviceEnvTemplateFile" ] ; then
 	echoDotEnvServiceHeader "$serviceName"
         cat "$serviceEnvTemplateFile" | sed "s/{{service_ip}}/$serviceIp/"
@@ -71,14 +71,40 @@ function echoServicesComposeBlocks() {
     serviceName="$(basename "$serviceDir")"
     serviceTemplateFile="$serviceDir/docker-compose.yml"
 
-    [ -f "$serviceDir/docker-compose.yml.volumes" ] && HAVE_VOLUMES=yes
-
-    if [ ! -f "$serviceTemplateFile" ] ; then
-      continue
+    if [ -f "$serviceTemplateFile" ] ; then
+        pasteServiceYml "$serviceDir" "$serviceName"
     fi
 
-    cat "$serviceTemplateFile" | grep -Ev '^(services|version):'
+    local serviceGeneratorFile
+
+    serviceGeneratorFile="$serviceDir/docker-compose.generate.sh"
+
+    if [ -f "$serviceGeneratorFile" ] ; then
+        generateServiceYml "$serviceDir" "$serviceName"
+    fi
+
+    if [ -f "$serviceDir/docker-compose.yml.volumes" ] ; then
+       HAVE_VOLUMES=yes
+    fi
   done
+}
+
+function pasteServiceYml()
+{
+  local serviceDir="$1" serviceName="$2"
+
+  serviceTemplateFile="$serviceDir/docker-compose.yml"
+
+  cat "$serviceTemplateFile" | grep -Ev '^(services|version):'
+}
+
+function generateServiceYml()
+{
+  local serviceDir="$1" serviceName="$2"
+
+  serviceGeneratorFile="$serviceDir/docker-compose.generate.sh"
+
+  $serviceGeneratorFile
 }
 
 function echoComposeVolumesBlock() {
@@ -99,7 +125,6 @@ function echoComposeVolumesBlock() {
     cat "$serviceVolumesFile" | grep -Ev '^\s*(volumes:\s*)?$'
   done
 }
-
 
 buildDotEnvFileTemplate > "$CONF_DEST_DIR/.env"
 echo "Created: .env"
