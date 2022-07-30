@@ -45,6 +45,14 @@ $params = [
     ],
 ];
 
+foreach ($params as $tabParams) {
+    foreach ($tabParams['options'] as $key => $tabParam) {
+        if (!preg_match('/^[\w_]+$/', $key)) {
+            throw new InvalidArgumentException("Ключ опции может содержать только символы a-zA-Z0-9 и _");
+        }
+    }
+}
+
 $aTabs = array_column($params, 'tab');
 $tabControl = new CAdminTabControl("tabControl", $aTabs);
 

@@ -1,0 +1,11 @@
+version: '2.2'
+
+networks:
+  app_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.20.12.0/24
+        gateway: 172.20.12.1
+
